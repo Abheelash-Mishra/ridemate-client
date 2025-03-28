@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 const FindDriverForm = () => {
     const [ID, setID] = useState("");
+    const [matchedDrivers, setMatchedDrivers] = useState(null);
 
     const handleIDChange = (e) => {
         const value = e.target.value.replace(/\D/g, "");
@@ -22,17 +23,20 @@ const FindDriverForm = () => {
 
         toast.promise(request, {
             loading: "Searching for potential drivers...",
-            success: "Found drivers near you!",
+            success: "Search Complete!",
             error: (err) => err.response.data.error ,
         });
 
-        request.then(response => console.log(response))
+        request.then(response => {
+            console.log(response.data);
+            setMatchedDrivers(response.data?.matchedDrivers ?? null);
+        })
             .catch(error => console.error(error.response));
     };
 
 
     return (
-        <div className={"h-96 flex justify-center items-center text-xl font-bold"}>
+        <div className={"h-96 flex flex-col justify-center items-center text-xl font-bold"}>
             <form
                 onSubmit={handleSubmit}
                 className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
@@ -55,9 +59,26 @@ const FindDriverForm = () => {
                 </div>
             </form>
 
-            <div>
-                {}
+            <div className={"my-8"}>
+                {matchedDrivers !== null ? (
+                    matchedDrivers.length > 0 ? (
+                        <div className={"flex flex-col items-center"}>
+                            <h1 className={"mb-4"}>Your Matched Drivers (Closest to Furthest)</h1>
+                            {matchedDrivers.map((driver, index) => (
+                                <p
+                                    key={index}
+                                    className={"font-medium"}
+                                >
+                                    {index+1}. DRIVER_D{driver}
+                                </p>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No Drivers Available.</p>
+                    )
+                ) : null}
             </div>
+
         </div>
     );
 };
