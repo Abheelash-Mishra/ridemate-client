@@ -41,7 +41,7 @@ const RideServices = () => {
     };
 
     return (
-        <div className="w-full h-[28rem] max-w-3xl mx-auto mt-10">
+        <div className="w-full h-[28rem] max-w-4xl mx-auto mt-10">
             <div className="flex justify-center border-b-[3px] border-black pb-2">
                 {options.map((option, index) => (
                     <button

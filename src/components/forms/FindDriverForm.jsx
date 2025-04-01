@@ -40,7 +40,7 @@ const FindDriverForm = () => {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
             >
-                <label className="col-span-2 font-medium text-right">Your Rider ID Number:</label>
+                <label className="col-span-2 font-medium text-right">Your Rider ID:</label>
                 <input
                     type="text"
                     value={ID}
@@ -77,7 +77,6 @@ const FindDriverForm = () => {
                     )
                 ) : null}
             </div>
-
         </div>
     );
 };
