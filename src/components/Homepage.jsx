@@ -6,6 +6,15 @@ const Homepage = () => {
     return (
         <>
             <div className="w-full h-80 flex flex-col items-center justify-center bg-gradient-to-b from-primary to-primary/20">
+                <Link
+                    to={"/admin"}
+                    className={"w-full flex justify-end px-8"}
+                >
+                    <p className={"text-blue-800 hover:underline"}>
+                        Need Admin Services?
+                    </p>
+                </Link>
+
                 <h1 className={"text-5xl font-bold my-8"}>
                     Ride Mate
                 </h1>
