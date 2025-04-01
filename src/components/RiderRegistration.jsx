@@ -42,6 +42,10 @@ const RiderRegistration = () => {
                 console.log(error.message);
                 toast.error(error.message + ": Registration Failed");
             });
+
+        setID("");
+        setCoordinateX("");
+        setCoordinateY("");
     };
 
 
