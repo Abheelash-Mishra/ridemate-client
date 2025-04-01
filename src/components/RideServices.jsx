@@ -1,19 +1,39 @@
 import {useState} from "react";
 import FindDriverForm from "./forms/FindDriverForm";
+import StartRideForm from "./forms/StartRideForm.jsx";
+import StopRideForm from "./forms/StopRideForm.jsx";
+import BillForm from "./forms/BillForm.jsx";
+import RateDriverForm from "./forms/RateDriverForm.jsx";
+import PaymentForm from "./forms/PaymentForm.jsx";
 
 const RideServices = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const options = ["Find Driver", "Start Ride", "Stop Ride", "Generate Bill", "Rate Driver", "Pay Bill"];
+    const options = ["Find Driver", "Start Ride", "Stop Ride", "Generate Bill", "Pay Bill", "Rate Driver"];
 
     const renderComponent = () => {
         switch (selectedOption) {
             case "Find Driver":
                 return <FindDriverForm />;
 
+            case "Start Ride":
+                return <StartRideForm />;
+
+            case "Stop Ride":
+                return <StopRideForm />;
+
+            case "Generate Bill":
+                return <BillForm />;
+
+            case "Rate Driver":
+                return <RateDriverForm />;
+
+            case "Pay Bill":
+                return <PaymentForm />
+
             default:
                 return (
-                    <div className={"h-96 flex justify-center items-center text-2xl font-bold"}>
+                    <div className={"h-[28rem] flex justify-center items-center text-2xl font-bold"}>
                         Choose one of our services!
                     </div>
                 );
@@ -21,7 +41,7 @@ const RideServices = () => {
     };
 
     return (
-        <div className="w-full max-w-3xl mx-auto mt-10">
+        <div className="w-full h-[28rem] max-w-3xl mx-auto mt-10">
             <div className="flex justify-center border-b-[3px] border-black pb-2">
                 {options.map((option, index) => (
                     <button

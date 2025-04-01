@@ -30,13 +30,12 @@ const FindDriverForm = () => {
         request.then(response => {
             console.log(response.data);
             setMatchedDrivers(response.data?.matchedDrivers ?? null);
-        })
-            .catch(error => console.error(error.response));
+        }).catch(error => console.error(error.response));
     };
 
 
     return (
-        <div className={"h-96 flex flex-col justify-center items-center text-xl font-bold"}>
+        <div className={"h-[28rem] flex flex-col justify-center items-center text-xl font-bold"}>
             <form
                 onSubmit={handleSubmit}
                 className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
