@@ -1,5 +1,5 @@
 services:
-  riderapp:
+  ridemate:
     build:
       context: .
       dockerfile: Dockerfile
