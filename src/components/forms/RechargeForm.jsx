@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import toast from "react-hot-toast";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 
 const RechargeForm = () => {
     const [step, setStep] = useState(1);
@@ -22,7 +21,7 @@ const RechargeForm = () => {
             return;
         }
 
-        axios.get(BASE_URL + "/payment/wallet", {
+        axios.get(import.meta.env.VITE_BASE_URL + "/payment/wallet", {
             params: {
                 riderID: riderID,
             }
@@ -38,7 +37,7 @@ const RechargeForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(BASE_URL + "/payment/add-money", null, {
+        axios.post(import.meta.env.VITE_BASE_URL + "/payment/add-money", null, {
             params: {
                 riderID: riderID,
                 amount: amount

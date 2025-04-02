@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 import toast from "react-hot-toast";
 
 const StartRideForm = () => {
@@ -27,7 +26,7 @@ const StartRideForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(BASE_URL + "/ride/start", null, {
+        axios.post(import.meta.env.VITE_BASE_URL + "/ride/start", null, {
             params: {
                 rideID: rideID,
                 N: driver,

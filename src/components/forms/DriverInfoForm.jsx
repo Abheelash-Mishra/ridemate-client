@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 import toast from "react-hot-toast";
 
 const DriverInfoForm = () => {
@@ -16,7 +15,7 @@ const DriverInfoForm = () => {
         e.preventDefault();
         setResponse(null);
 
-        axios.get(BASE_URL + "/admin/drivers/list", {
+        axios.get(import.meta.env.VITE_BASE_URL + "/admin/drivers/list", {
             params: {
                 N: number,
             }

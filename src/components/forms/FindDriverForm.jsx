@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants";
 import toast from "react-hot-toast";
 
 const FindDriverForm = () => {
@@ -15,7 +14,7 @@ const FindDriverForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const request = axios.get(BASE_URL + "/ride/rider/match", {
+        const request = axios.get(import.meta.env.VITE_BASE_URL + "/ride/rider/match", {
             params: {
                 riderID: ID
             }

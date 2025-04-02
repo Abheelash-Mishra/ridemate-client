@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../constants";
 import toast from "react-hot-toast";
 
 const DriverRegistration = () => {
@@ -27,7 +26,7 @@ const DriverRegistration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(BASE_URL + "/driver/add", null, {
+        axios.post(import.meta.env.VITE_BASE_URL + "/driver/add", null, {
             params: {
                 driverID: ID,
                 x: coordinateX,

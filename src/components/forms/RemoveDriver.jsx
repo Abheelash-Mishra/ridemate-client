@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 import toast from "react-hot-toast";
 
 const RemoveDriver = () => {
@@ -16,7 +15,7 @@ const RemoveDriver = () => {
         e.preventDefault();
         setResponse(null);
 
-        axios.delete(BASE_URL + "/admin/drivers/remove", {
+        axios.delete(import.meta.env.VITE_BASE_URL + "/admin/drivers/remove", {
             params: {
                 driverID: driverID,
             }

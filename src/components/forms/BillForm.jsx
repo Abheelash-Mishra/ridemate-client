@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 import toast from "react-hot-toast";
 
 const BillForm = () => {
@@ -15,7 +14,7 @@ const BillForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.get(BASE_URL + "/ride/bill", {
+        axios.get(import.meta.env.VITE_BASE_URL + "/ride/bill", {
             params: {
                 rideID: rideID,
             }

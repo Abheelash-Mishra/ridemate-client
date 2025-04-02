@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
 import toast from "react-hot-toast";
 
 const CheckIncomeForm = () => {
@@ -16,7 +15,7 @@ const CheckIncomeForm = () => {
         e.preventDefault();
         setResponse(null);
 
-        axios.get(BASE_URL + "/admin/drivers/earnings", {
+        axios.get(import.meta.env.VITE_BASE_URL + "/admin/drivers/earnings", {
             params: {
                 driverID: driverID,
             }

@@ -1,6 +1,5 @@
 import {useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "../constants";
 import toast from "react-hot-toast";
 
 const RiderRegistration = () => {
@@ -27,7 +26,7 @@ const RiderRegistration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(BASE_URL + "/ride/rider/add", null, {
+        axios.post(import.meta.env.VITE_BASE_URL + "/ride/rider/add", null, {
             params: {
                 riderID: ID,
                 x: coordinateX,
