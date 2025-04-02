@@ -1,12 +1,31 @@
-# React + Vite
+# RideMate Client Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+RideMate is a console-based and RESTAPI-enabled ride-hailing application written in Java using **Spring Boot**. It supports both **CLI commands** and **REST API endpoints** for managing rides, drivers, and riders.
+The client-side application was built using React (with Vite).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation & Setup
+### **1. Clone the Repository**
+```sh
+git clone https://github.com/Abheelash-Mishra/ridemate-client.git
+cd ridemate
+```
 
-## Expanding the ESLint configuration
+### **2. Install Dependencies**
+Ensure you have **Node.js** installed. Then, run this to generate the node modules:
+```sh
+npm ci
+```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Also ensure you have a local server of the backend API. You can find the repository [here](https://github.com/Abheelash-Mishra/RideMate).
+
+### **3. Start the Application**
+Make sure to run the server and add the base URL in the `.env` file. 
+
+Start the React application through the following command.
+```sh
+npm run dev
+```
+
+You can now access the React app at `http://localhost:5173`.
