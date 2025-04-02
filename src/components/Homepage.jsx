@@ -23,7 +23,7 @@ const Homepage = () => {
                 </p>
                 <Link to={"/rides"}>
                     <button
-                        className={"px-4 py-2 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300"}
+                        className={"px-4 py-2 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900"}
                     >
                         Use our services!
                     </button>

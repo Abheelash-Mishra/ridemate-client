@@ -50,8 +50,8 @@ const RiderRegistration = () => {
 
 
     return (
-        <div className="w-1/2 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center">
-            <h1 className="text-2xl font-semibold mb-4">
+        <div className="w-1/2 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
+            <h1 className="text-2xl font-semibold mb-8">
                 Register as a Rider
             </h1>
             <div className="flex items-center justify-center w-full">
