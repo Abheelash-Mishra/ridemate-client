@@ -1,13 +1,23 @@
 import {useState} from "react";
+import RemoveDriver from "./forms/RemoveDriver.jsx";
+import DriverInfoForm from "./forms/DriverInfoForm.jsx";
+import CheckIncomeForm from "./forms/CheckIncomeForm.jsx";
 
 const AdminServices = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const options = ["Remove Driver", "List Driver Info", "Driver's Income"];
+    const options = ["Remove Driver", "List Driver Info", "Check Driver's Income"];
 
     const renderComponent = () => {
         switch (selectedOption) {
-            // Need to add components
+            case "Remove Driver":
+                return <RemoveDriver />;
+
+            case "List Driver Info":
+                return <DriverInfoForm />;
+
+            case "Check Driver's Income":
+                return <CheckIncomeForm />;
 
             default:
                 return (
