@@ -1,0 +1,9 @@
+services:
+  riderapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ridemate-client:latest
+    container_name: ridemate-client-container
+    ports:
+      - "5173:5173"
