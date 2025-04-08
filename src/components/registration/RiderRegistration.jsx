@@ -2,35 +2,41 @@ import {useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const DriverRegistration = () => {
+const RiderRegistration = () => {
     const [ID, setID] = useState("");
-    const [coordinateX, setCoordinateX] = useState("");
-    const [coordinateY, setCoordinateY] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
 
     const handleIDChange = (e) => {
         const value = e.target.value.replace(/\D/g, "");
         setID(value);
     };
 
-    const handleCoordinateXChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateX(value);
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
     };
 
-    const handleCoordinateYChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateY(value);
+    const handlePhoneNumberChange = (e) => {
+        const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+        setPhoneNumber(value);
     };
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.post(import.meta.env.VITE_BASE_URL + "/driver/add", null, {
+        if (phoneNumber.length !== 10) {
+            toast.error("Phone number must be 10 digits!");
+            return;
+        }
+
+        axios.post(import.meta.env.VITE_BASE_URL + "/ride/rider/add", null, {
             params: {
-                driverID: ID,
-                x: coordinateX,
-                y: coordinateY
+                riderID: ID,
+                email: email,
+                phoneNumber: phoneNumber,
+                x: Math.floor(Math.random() * 11),
+                y: Math.floor(Math.random() * 11)
             }
         })
             .then(response => {
@@ -43,15 +49,15 @@ const DriverRegistration = () => {
             });
 
         setID("");
-        setCoordinateX("");
-        setCoordinateY("");
+        setEmail("");
+        setPhoneNumber("");
     };
 
 
     return (
         <div className="w-1/2 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
             <h1 className="text-2xl font-semibold mb-8">
-                Register as a Driver
+                Register as a Rider
             </h1>
             <div className="flex items-center justify-center w-full">
                 <form
@@ -66,19 +72,19 @@ const DriverRegistration = () => {
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
-                    <label className="col-span-2 text-md font-medium text-right">X Coordinate:</label>
+                    <label className="col-span-2 text-md font-medium text-right">Email ID:</label>
                     <input
                         type="text"
-                        value={coordinateX}
-                        onChange={handleCoordinateXChange}
+                        value={email}
+                        onChange={handleEmailChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
-                    <label className="col-span-2 text-md font-medium text-right">Y Coordinate:</label>
+                    <label className="col-span-2 text-md font-medium text-right">Phone Number:</label>
                     <input
                         type="text"
-                        value={coordinateY}
-                        onChange={handleCoordinateYChange}
+                        value={phoneNumber}
+                        onChange={handlePhoneNumberChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
@@ -96,4 +102,4 @@ const DriverRegistration = () => {
     );
 };
 
-export default DriverRegistration;
+export default RiderRegistration;

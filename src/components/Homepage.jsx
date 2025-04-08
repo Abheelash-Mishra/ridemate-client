@@ -1,5 +1,5 @@
-import DriverRegistration from "./DriverRegistration";
-import RiderRegistration from "./RiderRegistration";
+import DriverRegistration from "./registration/DriverRegistration.jsx";
+import RiderRegistration from "./registration/RiderRegistration.jsx";
 import {Link} from "react-router";
 
 const Homepage = () => {
