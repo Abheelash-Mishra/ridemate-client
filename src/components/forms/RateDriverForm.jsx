@@ -20,6 +20,12 @@ const RateDriverForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (rating < 0.0 || rating > 5.0) {
+            toast.error("Enter a rating between 0-5");
+            setRating("");
+            return;
+        }
+
         axios.post(import.meta.env.VITE_BASE_URL + "/driver/rate", null, {
             params: {
                 driverID: driverID,
