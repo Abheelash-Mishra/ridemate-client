@@ -3,15 +3,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const StopRideForm = () => {
-    const [rideID, setRideID] = useState("");
     const [destination, setDestination] = useState("");
     const [rideTime, setRideTime] = useState("");
     const [rideStatus, setRideStatus] = useState(null);
-
-    const handleRideIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setRideID(value);
-    }
 
     const handleDestinationChange = (e) => {
         setDestination(e.target.value);
@@ -27,7 +21,7 @@ const StopRideForm = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/stop", null, {
             params: {
-                rideID: rideID,
+                rideID: localStorage.getItem("RideID"),
                 destination: destination,
                 x: Math.floor(Math.random() * 11),
                 y: Math.floor(Math.random() * 11),
@@ -43,8 +37,6 @@ const StopRideForm = () => {
         });
     };
 
-    console.log(rideStatus)
-
     return (
         <div className={"h-[30rem] flex flex-col justify-center items-center text-xl font-bold"}>
             {!rideStatus ? (
@@ -52,14 +44,6 @@ const StopRideForm = () => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
                 >
-                    <label className="col-span-2 font-medium text-right">Ride ID:</label>
-                    <input
-                        type="text"
-                        value={rideID}
-                        onChange={handleRideIDChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
                     <label className="col-span-2 font-medium text-right">Destination:</label>
                     <input
                         type="text"

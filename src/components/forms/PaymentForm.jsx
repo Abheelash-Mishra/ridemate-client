@@ -3,14 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const PaymentForm = () => {
-    const [rideID, setRideID] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
     const [response, setResponse] = useState(null);
-
-    const handleRideIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setRideID(value);
-    };
 
     const handleMethodChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -21,12 +15,14 @@ const PaymentForm = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/payment/pay", null, {
             params: {
-                rideID: rideID,
+                rideID: localStorage.getItem("RideID"),
                 type: paymentMethod
             }
         }).then(response => {
             console.log(response.data);
             setResponse(response.data);
+            localStorage.removeItem("RideID");
+
             toast.success("Bill Paid!");
         }).catch(error => {
             console.log(error.response);
@@ -41,14 +37,6 @@ const PaymentForm = () => {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
             >
-                <label className="col-span-2 font-medium text-right">Enter Ride ID:</label>
-                <input
-                    type="text"
-                    value={rideID}
-                    onChange={handleRideIDChange}
-                    className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                />
-
                 <label className="col-span-2 font-medium text-right">Select Payment Method:</label>
                 <select
                     id="countries"

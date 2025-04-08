@@ -3,14 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const DriverRegistration = () => {
-    const [ID, setID] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-
-    const handleIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setID(value);
-    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -32,7 +26,6 @@ const DriverRegistration = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/driver/add", null, {
             params: {
-                driverID: ID,
                 email: email,
                 phoneNumber: phoneNumber,
                 x: Math.floor(Math.random() * 11),
@@ -48,7 +41,6 @@ const DriverRegistration = () => {
                 toast.error(error.message + ": Registration Failed");
             });
 
-        setID("");
         setEmail("");
         setPhoneNumber("");
     };
@@ -64,14 +56,6 @@ const DriverRegistration = () => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
                 >
-                    <label className="col-span-2 text-md font-medium text-right">Unique ID Number:</label>
-                    <input
-                        type="text"
-                        value={ID}
-                        onChange={handleIDChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
                     <label className="col-span-2 text-md font-medium text-right">Email ID:</label>
                     <input
                         type="text"

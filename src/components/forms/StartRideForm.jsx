@@ -3,24 +3,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const StartRideForm = () => {
-    const [rideID, setRideID] = useState("");
     const [driver, setDriver] = useState("");
-    const [riderID, setRiderID] = useState("");
     const [rideStatus, setRideStatus] = useState(null);
-
-    const handleRideIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setRideID(value);
-    }
 
     const handleDriverChange = (e) => {
         const value = e.target.value.replace(/\D/g, "");
         setDriver(value);
-    };
-
-    const handleRiderIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setRiderID(value);
     };
 
     const handleSubmit = (e) => {
@@ -28,13 +16,14 @@ const StartRideForm = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/start", null, {
             params: {
-                rideID: rideID,
                 N: driver,
-                riderID: riderID
+                riderID: localStorage.getItem("RiderID")
             }
         }).then(response => {
             console.log(response.data);
+            localStorage.setItem("RideID", response.data.rideID);
             setRideStatus(response.data);
+
             toast.success("Ride Started Successfully!");
         }).catch(error => {
             console.log(error.response);
@@ -51,27 +40,11 @@ const StartRideForm = () => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
                 >
-                    <label className="col-span-2 font-medium text-right">Ride ID:</label>
-                    <input
-                        type="text"
-                        value={rideID}
-                        onChange={handleRideIDChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
                     <label className="col-span-2 font-medium text-right">Choose a driver from your matches:</label>
                     <input
                         type="text"
                         value={driver}
                         onChange={handleDriverChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
-                    <label className="col-span-2 font-medium text-right">Your Rider ID:</label>
-                    <input
-                        type="text"
-                        value={riderID}
-                        onChange={handleRiderIDChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
