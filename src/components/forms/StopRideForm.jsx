@@ -4,8 +4,7 @@ import toast from "react-hot-toast";
 
 const StopRideForm = () => {
     const [rideID, setRideID] = useState("");
-    const [coordinateX, setCoordinateX] = useState("");
-    const [coordinateY, setCoordinateY] = useState("");
+    const [destination, setDestination] = useState("");
     const [rideTime, setRideTime] = useState("");
     const [rideStatus, setRideStatus] = useState(null);
 
@@ -14,14 +13,8 @@ const StopRideForm = () => {
         setRideID(value);
     }
 
-    const handleCoordinateXChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateX(value);
-    };
-
-    const handleCoordinateYChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateY(value);
+    const handleDestinationChange = (e) => {
+        setDestination(e.target.value);
     };
 
     const handleRideTimeChange = (e) => {
@@ -35,8 +28,9 @@ const StopRideForm = () => {
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/stop", null, {
             params: {
                 rideID: rideID,
-                x: coordinateX,
-                y: coordinateY,
+                destination: destination,
+                x: Math.floor(Math.random() * 11),
+                y: Math.floor(Math.random() * 11),
                 timeInMins: rideTime
             }
         }).then(response => {
@@ -66,19 +60,11 @@ const StopRideForm = () => {
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
-                    <label className="col-span-2 font-medium text-right">X Destination Coordinate:</label>
+                    <label className="col-span-2 font-medium text-right">Destination:</label>
                     <input
                         type="text"
-                        value={coordinateX}
-                        onChange={handleCoordinateXChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
-                    <label className="col-span-2 font-medium text-right">Y Destination Coordinate:</label>
-                    <input
-                        type="text"
-                        value={coordinateY}
-                        onChange={handleCoordinateYChange}
+                        value={destination}
+                        onChange={handleDestinationChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
