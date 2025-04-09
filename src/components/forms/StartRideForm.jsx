@@ -20,19 +20,15 @@ const StartRideForm = () => {
                 riderID: localStorage.getItem("RiderID")
             }
         }).then(response => {
-            console.log(response.data);
             localStorage.setItem("RideID", response.data.rideID);
             localStorage.setItem("DriverID", response.data.driverID);
             setRideStatus(response.data);
 
             toast.success("Ride Started Successfully!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };
-
-    console.log(rideStatus)
 
     return (
         <div className={"h-[30rem] flex flex-col justify-center items-center text-xl font-bold"}>

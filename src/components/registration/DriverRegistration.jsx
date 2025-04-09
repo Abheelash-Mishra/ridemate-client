@@ -33,11 +33,9 @@ const DriverRegistration = () => {
             }
         })
             .then(response => {
-                console.log(response);
                 toast.success("Registered Successfully!");
             })
             .catch(error => {
-                console.log(error.message);
                 toast.error(error.message + ": Registration Failed");
             });
 

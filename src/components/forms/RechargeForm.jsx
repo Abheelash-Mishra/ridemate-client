@@ -16,7 +16,6 @@ const RechargeForm = () => {
         }).then(response => {
             setBalance(response.data);
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     }, []);
@@ -33,7 +32,6 @@ const RechargeForm = () => {
             setBalance(response.data);
             toast.success("Recharged!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

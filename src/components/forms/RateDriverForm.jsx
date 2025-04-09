@@ -26,13 +26,11 @@ const RateDriverForm = () => {
                 rating: rating
             }
         }).then(response => {
-            console.log(response.data);
             setResponse(response.data);
             localStorage.removeItem("DriverID");
 
             toast.success("Driver Rated Successfully!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

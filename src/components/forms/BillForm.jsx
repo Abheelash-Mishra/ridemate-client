@@ -13,11 +13,9 @@ const BillForm = () => {
                 rideID: localStorage.getItem("RideID")
             }
         }).then(response => {
-            console.log(response.data);
             setBillAmount(response.data);
             toast.success("Bill Generated!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

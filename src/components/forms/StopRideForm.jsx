@@ -28,11 +28,9 @@ const StopRideForm = () => {
                 timeInMins: rideTime
             }
         }).then(response => {
-            console.log(response.data);
             setRideStatus(response.data);
             toast.success("Ride Stopped Successfully!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

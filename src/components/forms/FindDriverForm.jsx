@@ -26,7 +26,6 @@ const FindDriverForm = () => {
         });
 
         request.then(response => {
-            console.log(response.data);
             setMatchedDrivers(response.data?.matchedDrivers ?? null);
         }).catch(error => console.error(error.response));
     };

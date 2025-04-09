@@ -19,13 +19,11 @@ const PaymentForm = () => {
                 type: paymentMethod
             }
         }).then(response => {
-            console.log(response.data);
             setResponse(response.data);
             localStorage.removeItem("RideID");
 
             toast.success("Bill Paid!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

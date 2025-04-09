@@ -20,11 +20,9 @@ const DriverInfoForm = () => {
                 N: number,
             }
         }).then(response => {
-            console.log(response.data);
             setResponse(response.data);
             toast.success("Details Fetched!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };
