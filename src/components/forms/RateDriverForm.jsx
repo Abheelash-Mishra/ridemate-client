@@ -28,12 +28,14 @@ const RateDriverForm = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/driver/rate", null, {
             params: {
-                driverID: driverID,
+                driverID: localStorage.getItem("DriverID"),
                 rating: rating
             }
         }).then(response => {
             console.log(response.data);
             setResponse(response.data);
+            localStorage.removeItem("DriverID");
+
             toast.success("Driver Rated Successfully!");
         }).catch(error => {
             console.log(error.response);
@@ -48,14 +50,6 @@ const RateDriverForm = () => {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
             >
-                <label className="col-span-2 font-medium text-right">Enter Driver ID:</label>
-                <input
-                    type="text"
-                    value={driverID}
-                    onChange={handleDriverIDChange}
-                    className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                />
-
                 <label className="col-span-2 font-medium text-right">Enter Rating:</label>
                 <input
                     type="text"
