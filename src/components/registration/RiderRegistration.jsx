@@ -61,14 +61,6 @@ const RiderRegistration = () => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
                 >
-                    {/*<label className="col-span-2 text-md font-medium text-right">Unique ID Number:</label>*/}
-                    {/*<input*/}
-                    {/*    type="text"*/}
-                    {/*    value={ID}*/}
-                    {/*    onChange={handleIDChange}*/}
-                    {/*    className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"*/}
-                    {/*/>*/}
-
                     <label className="col-span-2 text-md font-medium text-right">Email ID:</label>
                     <input
                         type="text"

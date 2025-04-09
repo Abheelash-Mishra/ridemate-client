@@ -22,6 +22,7 @@ const StartRideForm = () => {
         }).then(response => {
             console.log(response.data);
             localStorage.setItem("RideID", response.data.rideID);
+            localStorage.setItem("DriverID", response.data.driverID);
             setRideStatus(response.data);
 
             toast.success("Ride Started Successfully!");
