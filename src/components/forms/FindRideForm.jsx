@@ -99,7 +99,7 @@ const FindRideForm = () => {
                         <div className="p-4 text-center">Ride ID: {rideStatus.rideID}</div>
                         <div className="p-4 text-center">Rider ID: {rideStatus.riderID}</div>
                         <div className="p-4 text-center">Driver ID: {rideStatus.driverID}</div>
-                        <div className="p-4 text-center">Ride Status: {rideStatus.status}</div>
+                        <div className="p-4 text-center">Status: {rideStatus.status}</div>
                     </div>
                 </div>
             )}

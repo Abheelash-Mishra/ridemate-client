@@ -1,7 +1,6 @@
 import {useState} from "react";
 import FindRideForm from "./forms/FindRideForm.jsx";
 import StopRideForm from "./forms/StopRideForm.jsx";
-import BillForm from "./forms/BillForm.jsx";
 import RateDriverForm from "./forms/RateDriverForm.jsx";
 import PaymentForm from "./forms/PaymentForm.jsx";
 import RechargeForm from "./forms/RechargeForm.jsx";
@@ -9,7 +8,7 @@ import RechargeForm from "./forms/RechargeForm.jsx";
 const RideServices = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const options = ["Find Your Ride", "Stop Ride", "Generate Bill", "Pay Bill", "Rate Driver", "Recharge Wallet"];
+    const options = ["Find Your Ride", "Stop Ride", "Pay Bill", "Rate Driver", "Recharge Wallet"];
 
     const renderComponent = () => {
         switch (selectedOption) {
@@ -18,9 +17,6 @@ const RideServices = () => {
 
             case "Stop Ride":
                 return <StopRideForm />;
-
-            case "Generate Bill":
-                return <BillForm />;
 
             case "Rate Driver":
                 return <RateDriverForm />;
