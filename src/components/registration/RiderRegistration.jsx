@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 const RiderRegistration = () => {
     const [showForm, setShowForm] = useState(true);
+    const [trigger, setTrigger] = useState(false);
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
 
@@ -14,7 +15,7 @@ const RiderRegistration = () => {
         } else {
             setShowForm(false);
         }
-    }, []);
+    }, [trigger]);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -53,7 +54,8 @@ const RiderRegistration = () => {
             })
             .catch(error => {
                 toast.error(error.message + ": Registration Failed");
-            });
+            })
+            .finally(() => setTrigger(prev => !prev));
 
         setEmail("");
         setPhoneNumber("");
