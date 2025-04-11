@@ -8,14 +8,19 @@ const StopRideForm = () => {
     const [rideTime, setRideTime] = useState("");
     const [rideStatus, setRideStatus] = useState(null);
 
+    const rideID = localStorage.getItem("RideID");
+    const billPending = localStorage.getItem("billPending") === "true";
+
     useEffect(() => {
-        const storedValue = localStorage.getItem("RideID");
-        if (storedValue === null) {
+        const rideID = localStorage.getItem("RideID");
+        const billPending = localStorage.getItem("billPending") === "true";
+
+        if (rideID === null || billPending) {
             setShowForm(false);
-        } else {
+        }
+        else {
             setShowForm(true);
         }
-
     }, []);
 
     const handleDestinationChange = (e) => {
@@ -37,7 +42,7 @@ const StopRideForm = () => {
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/stop", null, {
             params: {
-                rideID: localStorage.getItem("RideID"),
+                rideID: rideID,
                 destination: destination,
                 x: Math.floor(Math.random() * 11),
                 y: Math.floor(Math.random() * 11),
@@ -46,6 +51,7 @@ const StopRideForm = () => {
         }).then(response => {
             setRideStatus(response.data);
             toast.success("Ride Stopped Successfully!");
+            localStorage.setItem("billPending", "true");
         }).catch(error => {
             toast.error(error.response.data.error);
         });
@@ -96,10 +102,13 @@ const StopRideForm = () => {
                     </div>
                 )
             ) : (
-                <p>You have not started any ride yet!</p>
+                billPending ? (
+                    <p>Please pay the bill of your ride!</p>
+                ) : (
+                    <p>You have not started any ride yet!</p>
+                )
             )}
         </div>
-
     );
 };
 

@@ -47,6 +47,7 @@ const PaymentForm = () => {
             setResponse(response.data);
             if (response.data.paymentStatus !== "FAILED") {
                 localStorage.removeItem("RideID");
+                localStorage.removeItem("billPending");
                 toast.success("Bill Paid!");
             }
             else {
