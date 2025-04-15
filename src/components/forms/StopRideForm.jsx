@@ -4,8 +4,6 @@ import toast from "react-hot-toast";
 
 const StopRideForm = () => {
     const [showForm, setShowForm] = useState(false);
-    const [destination, setDestination] = useState("");
-    const [rideTime, setRideTime] = useState("");
     const [rideStatus, setRideStatus] = useState(null);
 
     const rideID = localStorage.getItem("RideID");
@@ -23,30 +21,13 @@ const StopRideForm = () => {
         }
     }, []);
 
-    const handleDestinationChange = (e) => {
-        setDestination(e.target.value);
-    };
-
-    const handleRideTimeChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setRideTime(value);
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (destination === "" || rideTime === "") {
-            toast.error("Don't leave any fields empty");
-            return;
-        }
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/stop", null, {
             params: {
                 rideID: rideID,
-                destination: destination,
-                x: Math.floor(Math.random() * 11),
-                y: Math.floor(Math.random() * 11),
-                timeInMins: rideTime
+                timeInMins: Math.floor(Math.random() * 61) + 10                   // Keeping minimum ride time as 10
             }
         }).then(response => {
             setRideStatus(response.data);
@@ -63,25 +44,11 @@ const StopRideForm = () => {
                 !rideStatus ? (
                     <form
                         onSubmit={handleSubmit}
-                        className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
+                        className="flex flex-col w-2/3 justify-center items-center"
                     >
-                        <label className="col-span-2 font-medium text-right">Destination:</label>
-                        <input
-                            type="text"
-                            value={destination}
-                            onChange={handleDestinationChange}
-                            className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                        />
+                        <h2 className={"my-8 justify-center items-center"}>Conclude Your Ride?</h2>
 
-                        <label className="col-span-2 font-medium text-right">Ride Duration (Minutes)</label>
-                        <input
-                            type="text"
-                            value={rideTime}
-                            onChange={handleRideTimeChange}
-                            className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                        />
-
-                        <div className="col-span-4 flex justify-center mt-2">
+                        <div className="flex justify-center mt-2">
                             <button
                                 type="submit"
                                 className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"

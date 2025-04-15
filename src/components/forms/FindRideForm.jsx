@@ -3,6 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const FindRideForm = () => {
+    const [destination, setDestination] = useState("");
     const [matchedDrivers, setMatchedDrivers] = useState(null);
     const [rideStatus, setRideStatus] = useState(null);
     const [showForm, setShowForm] = useState(true);
@@ -14,6 +15,10 @@ const FindRideForm = () => {
             setShowForm(false);
         }
     }, []);
+
+    const handleDestinationChange = (e) => {
+        setDestination(e.target.value);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -50,7 +55,10 @@ const FindRideForm = () => {
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/start", null, {
             params: {
                 N: index,
-                riderID: localStorage.getItem("RiderID")
+                riderID: localStorage.getItem("RiderID"),
+                destination: destination,
+                x: Math.floor(Math.random() * 11),
+                y: Math.floor(Math.random() * 11)
             }
         }).then(response => {
             localStorage.setItem("RideID", response.data.rideID);
@@ -75,6 +83,16 @@ const FindRideForm = () => {
                             className="flex flex-col w-2/3 justify-center items-center"
                         >
                             <h2 className={"my-8 justify-center items-center"}>Ready to Find Nearby Drivers?</h2>
+
+                            <div className={"flex flex-row justify-center items-center mb-4"}>
+                                <label className="col-span-2 font-medium text-right mx-4">Destination:</label>
+                                <input
+                                    type="text"
+                                    value={destination}
+                                    onChange={handleDestinationChange}
+                                    className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
+                                />
+                            </div>
 
                             <div className="flex justify-center mt-2">
                                 <button
