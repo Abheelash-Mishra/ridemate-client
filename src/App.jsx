@@ -6,10 +6,16 @@ import {useEffect} from "react";
 
 function App() {
     useEffect(() => {
-        localStorage.removeItem("matchedDrivers");
-        localStorage.removeItem("RideID");
-        localStorage.removeItem("DriverID");
-        localStorage.removeItem("billPending");
+        const hasCleaned = sessionStorage.getItem("initialCleanupDone");
+
+        if (!hasCleaned) {
+            localStorage.removeItem("matchedDrivers");
+            localStorage.removeItem("RideID");
+            localStorage.removeItem("DriverID");
+            localStorage.removeItem("billPending");
+
+            sessionStorage.setItem("initialCleanupDone", "true");
+        }
     }, []);
 
     return (
