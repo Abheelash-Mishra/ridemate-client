@@ -28,6 +28,11 @@ const FindRideForm = () => {
             return;
         }
 
+        if (destination === "") {
+            toast.error("Please enter your destination!");
+            return;
+        }
+
         const request = axios.get(import.meta.env.VITE_BASE_URL + "/ride/rider/match", {
             params: {
                 riderID: localStorage.getItem("RiderID")

@@ -2,8 +2,16 @@ import Homepage from "./components/Homepage";
 import {BrowserRouter, Route, Routes} from "react-router";
 import RideServices from "./components/RideServices";
 import AdminServices from "./components/AdminServices.jsx";
+import {useEffect} from "react";
 
 function App() {
+    useEffect(() => {
+        localStorage.removeItem("matchedDrivers");
+        localStorage.removeItem("RideID");
+        localStorage.removeItem("DriverID");
+        localStorage.removeItem("billPending");
+    }, []);
+
     return (
         <>
             <BrowserRouter>
