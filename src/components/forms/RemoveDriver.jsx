@@ -20,11 +20,9 @@ const RemoveDriver = () => {
                 driverID: driverID,
             }
         }).then(response => {
-            console.log(response.data);
             setResponse(response.data);
             toast.success("Driver removed!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };

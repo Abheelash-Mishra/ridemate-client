@@ -3,48 +3,44 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const DriverRegistration = () => {
-    const [ID, setID] = useState("");
-    const [coordinateX, setCoordinateX] = useState("");
-    const [coordinateY, setCoordinateY] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
 
-    const handleIDChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setID(value);
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
     };
 
-    const handleCoordinateXChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateX(value);
-    };
-
-    const handleCoordinateYChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "");
-        setCoordinateY(value);
+    const handlePhoneNumberChange = (e) => {
+        const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+        setPhoneNumber(value);
     };
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (phoneNumber.length !== 10) {
+            toast.error("Phone number must be 10 digits!");
+            return;
+        }
+
         axios.post(import.meta.env.VITE_BASE_URL + "/driver/add", null, {
             params: {
-                driverID: ID,
-                x: coordinateX,
-                y: coordinateY
+                email: email,
+                phoneNumber: phoneNumber,
+                x: Math.floor(Math.random() * 11),
+                y: Math.floor(Math.random() * 11)
             }
         })
             .then(response => {
-                console.log(response);
                 toast.success("Registered Successfully!");
             })
             .catch(error => {
-                console.log(error.message);
                 toast.error(error.message + ": Registration Failed");
             });
 
-        setID("");
-        setCoordinateX("");
-        setCoordinateY("");
+        setEmail("");
+        setPhoneNumber("");
     };
 
 
@@ -58,27 +54,19 @@ const DriverRegistration = () => {
                     onSubmit={handleSubmit}
                     className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
                 >
-                    <label className="col-span-2 text-md font-medium text-right">Unique ID Number:</label>
+                    <label className="col-span-2 text-md font-medium text-right">Email ID:</label>
                     <input
                         type="text"
-                        value={ID}
-                        onChange={handleIDChange}
+                        value={email}
+                        onChange={handleEmailChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 
-                    <label className="col-span-2 text-md font-medium text-right">X Coordinate:</label>
+                    <label className="col-span-2 text-md font-medium text-right">Phone Number:</label>
                     <input
                         type="text"
-                        value={coordinateX}
-                        onChange={handleCoordinateXChange}
-                        className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                    />
-
-                    <label className="col-span-2 text-md font-medium text-right">Y Coordinate:</label>
-                    <input
-                        type="text"
-                        value={coordinateY}
-                        onChange={handleCoordinateYChange}
+                        value={phoneNumber}
+                        onChange={handlePhoneNumberChange}
                         className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
                     />
 

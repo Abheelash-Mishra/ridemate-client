@@ -20,11 +20,9 @@ const CheckIncomeForm = () => {
                 driverID: driverID,
             }
         }).then(response => {
-            console.log(response.data);
             setResponse(response.data);
             toast.success("Fetched earnings!");
         }).catch(error => {
-            console.log(error.response);
             toast.error(error.response.data.error);
         });
     };
