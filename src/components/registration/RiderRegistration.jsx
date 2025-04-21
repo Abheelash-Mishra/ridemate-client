@@ -26,12 +26,17 @@ const RiderRegistration = () => {
         setPhoneNumber(value);
     };
 
-
+    const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (email === "" || phoneNumber === "") {
             toast.error("Form cannot be left blank!");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            toast.error("Enter a valid email address!");
             return;
         }
 

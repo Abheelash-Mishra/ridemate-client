@@ -15,13 +15,24 @@ const DriverRegistration = () => {
         setPhoneNumber(value);
     };
 
-
+    const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (email === "" || phoneNumber === "") {
+            toast.error("Form cannot be left blank!");
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            toast.error("Enter a valid email address!");
+            return;
+        }
 
         if (phoneNumber.length !== 10) {
             toast.error("Phone number must be 10 digits!");
             return;
+
         }
 
         axios.post(import.meta.env.VITE_BASE_URL + "/driver/add", null, {
