@@ -56,7 +56,7 @@ const ViewPastRides = () => {
                                     <p>Driver ID: {ride.driverID}</p>
                                     <p>Destination: {ride.destination}</p>
                                     <p>Ride Duration: {ride.rideDuration}</p>
-                                    <p>Bill: ₹{ride.billAmount}</p>
+                                    <p>Bill: ₹{ride.billAmount} ({ride.paymentMethod})</p>
                                 </div>
                                 <p className="text-sm text-gray-500 w-20">ID: {ride.rideID}</p>
                             </li>
