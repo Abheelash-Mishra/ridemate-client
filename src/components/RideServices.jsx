@@ -4,11 +4,12 @@ import StopRideForm from "./forms/StopRideForm.jsx";
 import RateDriverForm from "./forms/RateDriverForm.jsx";
 import PaymentForm from "./forms/PaymentForm.jsx";
 import RechargeForm from "./forms/RechargeForm.jsx";
+import ViewPastRides from "./ViewPastRides.jsx";
 
 const RideServices = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const options = ["Find Your Ride", "Stop Ride", "Pay Bill", "Rate Driver", "Recharge Wallet"];
+    const options = ["Find Your Ride", "Stop Ride", "Pay Bill", "Rate Driver", "Recharge Wallet", "View Past Rides"];
 
     const renderComponent = () => {
         switch (selectedOption) {
@@ -26,6 +27,9 @@ const RideServices = () => {
 
             case "Recharge Wallet":
                 return <RechargeForm />;
+
+            case "View Past Rides":
+                return <ViewPastRides />
 
             default:
                 return (
