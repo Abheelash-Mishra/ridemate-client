@@ -68,8 +68,8 @@ const RiderRegistration = () => {
 
 
     return (
-        <div className="w-2/5 h-52 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
-            <h1 className="text-2xl font-semibold mb-8">
+        <div className="w-2/5 h-56 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
+            <h1 className="text-2xl font-semibold mb-4">
                 Register as a Rider
             </h1>
             {showForm ? (
@@ -108,11 +108,10 @@ const RiderRegistration = () => {
                 </>
             ) : (
                 <>
-                    <h1 className={"text-lg font-semibold"}>You have already registered!</h1>
+                    <h1 className={"text-lg font-semibold"}>You have registered!</h1>
                     <h2 className={"text-lg font-semibold"}>Your unique ID number is '{localStorage.getItem("RiderID")}'</h2>
                 </>
             )}
-
         </div>
     );
 };

@@ -81,7 +81,6 @@ const PaymentForm = () => {
                                 >
                                     <label className="col-span-2 font-medium text-right">Select Payment Method:</label>
                                     <select
-                                        id="countries"
                                         value={paymentMethod}
                                         onChange={handleMethodChange}
                                         className="col-span-2 px-2 py-1 font-medium rounded-lg border-black/80 border-2"
