@@ -33,6 +33,13 @@ const FindRideForm = () => {
             return;
         }
 
+        // Check if it contains only numbers and spaces
+        const destinationRegex = /^[0-9\s]*$/;
+        if (destinationRegex.test(destination)) {
+            toast.error("Please enter a valid destination!");
+            return;
+        }
+
         const request = axios.get(import.meta.env.VITE_BASE_URL + "/ride/rider/match", {
             params: {
                 riderID: localStorage.getItem("RiderID")
