@@ -5,11 +5,12 @@ import RateDriverForm from "./forms/RateDriverForm.jsx";
 import PaymentForm from "./forms/PaymentForm.jsx";
 import RechargeForm from "./forms/RechargeForm.jsx";
 import ViewPastRides from "./ViewPastRides.jsx";
+import WalletTransactions from "./WalletTransactions.jsx";
 
 const RideServices = () => {
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const options = ["Find Your Ride", "Stop Ride", "Pay Bill", "Rate Driver", "Recharge Wallet", "View Past Rides"];
+    const options = ["Find Your Ride", "Stop Ride", "Pay Bill", "Rate Driver", "Past Rides", "Recharge Wallet", "Wallet Transactions"];
 
     const renderComponent = () => {
         switch (selectedOption) {
@@ -25,11 +26,14 @@ const RideServices = () => {
             case "Pay Bill":
                 return <PaymentForm />;
 
+            case "Past Rides":
+                return <ViewPastRides />
+
             case "Recharge Wallet":
                 return <RechargeForm />;
 
-            case "View Past Rides":
-                return <ViewPastRides />
+            case "Wallet Transactions":
+                return <WalletTransactions />
 
             default:
                 return (
@@ -41,7 +45,7 @@ const RideServices = () => {
     };
 
     return (
-        <div className="w-full h-[28rem] max-w-4xl mx-auto mt-10">
+        <div className="w-full h-[28rem] max-w-5xl mx-auto mt-10">
             <div className="flex justify-center border-b-[3px] border-black pb-2">
                 {options.map((option, index) => (
                     <button
