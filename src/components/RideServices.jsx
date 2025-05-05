@@ -62,7 +62,7 @@ const RideServices = () => {
                 ))}
             </div>
 
-            <div className="mt-4 p-4 border-black border-[3px] rounded">
+            <div className="mt-4 border-black border-[3px] rounded">
                 {renderComponent()}
             </div>
         </div>

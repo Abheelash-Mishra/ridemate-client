@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -8,8 +8,12 @@ const FindRideForm = () => {
     const [rideStatus, setRideStatus] = useState(null);
     const [showForm, setShowForm] = useState(true);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 9;
+
     useEffect(() => {
-        setMatchedDrivers(JSON.parse(localStorage.getItem("matchedDrivers")));
+        const storedDrivers = JSON.parse(localStorage.getItem("matchedDrivers"));
+        setMatchedDrivers(storedDrivers);
 
         if (localStorage.getItem("RideID") !== null) {
             setShowForm(false);
@@ -28,12 +32,11 @@ const FindRideForm = () => {
             return;
         }
 
-        if (destination === "") {
+        if (destination.trim() === "") {
             toast.error("Please enter your destination!");
             return;
         }
 
-        // Check if it contains only numbers and spaces
         const destinationRegex = /^[0-9\s]*$/;
         if (destinationRegex.test(destination)) {
             toast.error("Please enter a valid destination!");
@@ -53,10 +56,12 @@ const FindRideForm = () => {
         });
 
         request.then(response => {
-            setMatchedDrivers(response.data?.matchedDrivers);
+            const drivers = response.data?.matchedDrivers;
+            setMatchedDrivers(drivers);
+            setCurrentPage(1);
 
-            if (response.data?.matchedDrivers.length > 0) {
-                localStorage.setItem("matchedDrivers", JSON.stringify(response.data?.matchedDrivers));
+            if (drivers.length > 0) {
+                localStorage.setItem("matchedDrivers", JSON.stringify(drivers));
             }
         }).catch(error => console.error(error.response));
     };
@@ -77,32 +82,34 @@ const FindRideForm = () => {
             localStorage.setItem("DriverID", response.data.driverID);
             localStorage.removeItem("matchedDrivers");
             setRideStatus(response.data);
-
             toast.success("Ride Started Successfully!");
         }).catch(error => {
             toast.error(error.response.data.error);
         });
     };
 
+    const totalPages = matchedDrivers ? Math.ceil(matchedDrivers.length / pageSize) : 1;
+    const paginatedDrivers = matchedDrivers ? matchedDrivers.slice((currentPage - 1) * pageSize, currentPage * pageSize) : [];
 
     return (
-        <div className={"h-[28rem] flex flex-col justify-center items-center text-xl font-bold"}>
-            { showForm ? (
+        <div className="h-[28rem] flex flex-col justify-center items-center text-xl font-bold">
+            {showForm ? (
                 !rideStatus ? (
                     <>
                         <form
                             onSubmit={handleSubmit}
                             className="flex flex-col w-2/3 justify-center items-center"
                         >
-                            <h2 className={"my-8 justify-center items-center"}>Ready to Find Nearby Drivers?</h2>
+                            <h2 className="my-8">Ready to Find Nearby Drivers?</h2>
 
-                            <div className={"flex flex-row justify-center items-center mb-4"}>
-                                <label className="col-span-2 font-medium text-right mx-4">Destination:</label>
+                            <div className="flex flex-row justify-center items-center mb-4">
+                                <label className="font-medium text-right mx-4">Destination:</label>
                                 <input
                                     type="text"
                                     value={destination}
                                     onChange={handleDestinationChange}
-                                    className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
+                                    disabled={matchedDrivers !== null && matchedDrivers.length > 0}
+                                    className="px-2 py-1 rounded-lg border-black/80 border-2 disabled:text-gray-500"
                                 />
                             </div>
 
@@ -117,20 +124,51 @@ const FindRideForm = () => {
                             </div>
                         </form>
 
-                        <div className={"my-8"}>
+                        <div className="my-8 w-full max-w-3xl">
                             {matchedDrivers !== null ? (
                                 matchedDrivers.length > 0 ? (
-                                    <div className={"flex flex-col items-center"}>
-                                        <h1 className={"mb-4"}>Select a driver (Ordered closest to furthest)</h1>
-                                        {matchedDrivers.map((driver, index) => (
-                                            <p
-                                                key={index}
-                                                className={"text-blue-600 cursor-pointer font-medium hover:text-blue-900"}
-                                                onClick={(e) => handleStartRide(e, index+1)}
+                                    <div className="flex flex-col items-center">
+                                        <h1 className="mb-6">Select a driver (Ordered closest to furthest)</h1>
+
+                                        <div className="flex items-center justify-between w-full">
+                                            <button
+                                                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                                disabled={currentPage === 1}
+                                                className="px-3 py-1 bg-blue-500 text-white text-lg rounded disabled:bg-gray-400"
                                             >
-                                                {index+1}. DRIVER_D{driver}
-                                            </p>
-                                        ))}
+                                                Prev
+                                            </button>
+
+                                            <div className="grid grid-cols-3 gap-6 w-full mx-4">
+                                                {paginatedDrivers.map((driver, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="p-1 bg-blue-100 rounded shadow text-center text-lg cursor-pointer hover:bg-blue-200"
+                                                        onClick={(e) =>
+                                                            handleStartRide(e,(currentPage - 1) * pageSize + index + 1)
+                                                        }
+                                                    >
+                                                        {(currentPage - 1) * pageSize + index + 1}. DRIVER_D{driver}
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <button
+                                                onClick={() =>
+                                                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                                                }
+                                                disabled={currentPage === totalPages}
+                                                className="px-3 py-1 bg-blue-500 text-white text-lg rounded disabled:bg-gray-400"
+                                            >
+                                                Next
+                                            </button>
+                                        </div>
+
+                                        {totalPages > 1 && (
+                                            <div className="mt-4 text-sm text-gray-600">
+                                                Page {currentPage} of {totalPages}
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <p>No Drivers Available.</p>
