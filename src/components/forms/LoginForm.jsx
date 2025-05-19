@@ -3,12 +3,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useNavigate} from "react-router";
 
-const RiderRegistration = () => {
+const LoginForm = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [address, setAddress] = useState("");
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -18,20 +16,11 @@ const RiderRegistration = () => {
         setPassword(e.target.value);
     };
 
-    const handleAddressChange = (e) => {
-        setAddress(e.target.value);
-    };
-
-    const handlePhoneNumberChange = (e) => {
-        const value = e.target.value.replace(/\D/g, "").slice(0, 10);
-        setPhoneNumber(value);
-    };
-
     const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (email === "" || password === "" || phoneNumber === "" || address === "") {
+        if (email === "" || password === "") {
             toast.error("Form cannot be left blank!");
             return;
         }
@@ -41,23 +30,15 @@ const RiderRegistration = () => {
             return;
         }
 
-        if (phoneNumber.length !== 10) {
-            toast.error("Phone number must be 10 digits!");
-            return;
-        }
-
-        axios.post(import.meta.env.VITE_BASE_URL + "/auth/register/rider", {
-                email,
-                password,
-                phoneNumber,
-                address,
-                x: Math.floor(Math.random() * 11),
-                y: Math.floor(Math.random() * 11)
+        axios.post(import.meta.env.VITE_BASE_URL + "/auth/login", {
+            email,
+            password
         })
             .then(response => {
-                toast.success("Registered Successfully!");
+                localStorage.setItem("jwt", response.data.token)
+                toast.success("Logged In Successfully!");
 
-                navigate("/login")
+                navigate("/rides")
             })
             .catch(error => {
                 console.log(error)
@@ -68,9 +49,9 @@ const RiderRegistration = () => {
 
     return (
         <div className={"h-screen flex flex-col justify-center items-center bg-p"}>
-            <div className="w-2/5 h-auto flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
+            <div className="w-full h-[20rem] max-w-xl mt-10 flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
                 <h1 className="text-2xl font-semibold mb-4">
-                    Register as a Rider
+                    Login
                 </h1>
                 <>
                     <div className="flex items-center justify-center w-full">
@@ -94,28 +75,12 @@ const RiderRegistration = () => {
                                 className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
                             />
 
-                            <label className="col-span-1 text-md font-medium text-right">Phone Number:</label>
-                            <input
-                                type="text"
-                                value={phoneNumber}
-                                onChange={handlePhoneNumberChange}
-                                className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
-                            />
-
-                            <label className="col-span-1 text-md font-medium text-right">Address:</label>
-                            <input
-                                type="text"
-                                value={address}
-                                onChange={handleAddressChange}
-                                className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
-                            />
-
                             <div className="col-span-4 flex justify-center mt-2">
                                 <button
                                     type="submit"
                                     className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
                                 >
-                                    Register
+                                    Log In
                                 </button>
                             </div>
                         </form>
@@ -126,4 +91,4 @@ const RiderRegistration = () => {
     );
 };
 
-export default RiderRegistration;
+export default LoginForm;

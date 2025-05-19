@@ -4,6 +4,8 @@ import RideServices from "./components/RideServices";
 import AdminServices from "./components/AdminServices.jsx";
 import {useEffect} from "react";
 import DriverRegistration from "./components/registration/DriverRegistration.jsx";
+import LoginForm from "./components/forms/LoginForm.jsx";
+import RiderRegistration from "./components/registration/RiderRegistration.jsx";
 
 function App() {
     useEffect(() => {
@@ -24,7 +26,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route index element={<Homepage />} />
+                    <Route path={"login"} element={<LoginForm />} />
                     <Route path={"register/driver"} element={<DriverRegistration />} />
+                    <Route path={"register/rider"} element={<RiderRegistration />} />
                     <Route path={"rides"} element={<RideServices />} />
                     <Route path={"admin"} element={<AdminServices />} />
                 </Routes>

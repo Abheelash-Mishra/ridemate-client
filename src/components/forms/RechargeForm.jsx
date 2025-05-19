@@ -11,6 +11,9 @@ const RechargeForm = () => {
 
     useEffect(() => {
         axios.get(import.meta.env.VITE_BASE_URL + "/payment/wallet", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 riderID: localStorage.getItem("RiderID")
             }
@@ -34,6 +37,9 @@ const RechargeForm = () => {
         }
 
         axios.post(import.meta.env.VITE_BASE_URL + "/payment/add-money", null, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 riderID: localStorage.getItem("RiderID"),
                 amount: amount,

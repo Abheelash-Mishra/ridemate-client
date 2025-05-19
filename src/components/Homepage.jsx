@@ -2,9 +2,16 @@ import RiderRegistration from "./registration/RiderRegistration.jsx";
 import {Link} from "react-router";
 
 const Homepage = () => {
+    const handleLogout = () => {
+        localStorage.removeItem("jwt");
+
+        // then refresh
+        window.location.reload();
+    };
+
     return (
         <>
-            <div className="w-full h-80 flex flex-col items-center justify-center bg-gradient-to-b from-primary to-primary/20">
+            <div className="w-full h-80 flex flex-col items-center justify-center bg-gradient-to-b from-primary to-white">
                 <div className={"w-full flex justify-between items-center"}>
                     <Link
                         to={"/register/driver"}
@@ -15,14 +22,38 @@ const Homepage = () => {
                         </p>
                     </Link>
 
-                    <Link
-                        to={"/admin"}
-                        className={"px-8"}
-                    >
-                        <p className={"text-blue-800 hover:underline"}>
-                            Need Admin Services?
-                        </p>
-                    </Link>
+                    {/*<Link*/}
+                    {/*    to={"/admin"}*/}
+                    {/*    className={"px-8"}*/}
+                    {/*>*/}
+                    {/*    <p className={"text-blue-800 hover:underline"}>*/}
+                    {/*        Need Admin Services?*/}
+                    {/*    </p>*/}
+                    {/*</Link>*/}
+
+                    {!localStorage.getItem("jwt") ? (
+                        <div className="flex flex-row">
+                            <Link to="/login" className="px-2">
+                                <p className="px-3 py-1 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900">
+                                    Login
+                                </p>
+                            </Link>
+
+                            <Link to="/register/rider" className="px-2">
+                                <p className="px-3 py-1 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900">
+                                    Register
+                                </p>
+                            </Link>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={handleLogout}
+                            on
+                            className="px-3 py-1 mx-4 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900">
+                            Logout
+                        </button>
+                    )}
+
                 </div>
 
                 <h1 className={"text-5xl font-bold my-8"}>
@@ -38,15 +69,6 @@ const Homepage = () => {
                         Use our services!
                     </button>
                 </Link>
-            </div>
-            <div className={"bg-primary/20"}>
-                <h1 className={"flex justify-center text-3xl font-bold py-8"}>
-                    Interested in our services?
-                </h1>
-
-                <div className={"flex flex-row pb-16 justify-center"}>
-                    <RiderRegistration />
-                </div>
             </div>
         </>
     );

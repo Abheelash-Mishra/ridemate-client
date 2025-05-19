@@ -9,6 +9,9 @@ const ViewPastRides = () => {
 
     useEffect(() => {
         axios.get(import.meta.env.VITE_BASE_URL + "/ride/all", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 riderID: localStorage.getItem("RiderID")
             }

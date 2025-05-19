@@ -10,6 +10,9 @@ const WalletTransactions = () => {
 
     useEffect(() => {
         axios.get(import.meta.env.VITE_BASE_URL + "/payment/wallet/transactions", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 riderID: localStorage.getItem("RiderID")
             }

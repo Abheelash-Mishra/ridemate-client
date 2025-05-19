@@ -27,11 +27,6 @@ const FindRideForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (localStorage.getItem("RiderID") === null) {
-            toast.error("Please register as a rider first!");
-            return;
-        }
-
         if (destination.trim() === "") {
             toast.error("Please enter your destination!");
             return;
@@ -44,8 +39,8 @@ const FindRideForm = () => {
         }
 
         const request = axios.get(import.meta.env.VITE_BASE_URL + "/ride/rider/match", {
-            params: {
-                riderID: localStorage.getItem("RiderID")
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
             }
         });
 
@@ -70,9 +65,11 @@ const FindRideForm = () => {
         e.preventDefault();
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/start", null, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 N: index,
-                riderID: localStorage.getItem("RiderID"),
                 destination: destination,
                 x: Math.floor(Math.random() * 11),
                 y: Math.floor(Math.random() * 11)

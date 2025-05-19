@@ -25,6 +25,9 @@ const StopRideForm = () => {
         e.preventDefault();
 
         axios.post(import.meta.env.VITE_BASE_URL + "/ride/stop", null, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 rideID: rideID,
                 timeInMins: Math.floor(Math.random() * 61) + 10                   // Keeping minimum ride time as 10

@@ -10,6 +10,7 @@ const PaymentForm = () => {
 
     useEffect(() => {
         const storedValue = localStorage.getItem("RideID");
+        console.log(storedValue)
         if (storedValue === null) {
             setShowForm(false);
         } else {
@@ -17,6 +18,9 @@ const PaymentForm = () => {
             localStorage.setItem("tempID", storedValue);
 
             axios.get(import.meta.env.VITE_BASE_URL + "/ride/bill", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
                 params: {
                     rideID: localStorage.getItem("RideID")
                 }
@@ -40,6 +44,9 @@ const PaymentForm = () => {
         }
 
         axios.post(import.meta.env.VITE_BASE_URL + "/payment/pay", null, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 rideID: localStorage.getItem("RideID"),
                 type: paymentMethod

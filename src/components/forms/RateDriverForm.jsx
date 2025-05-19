@@ -41,7 +41,10 @@ const RateDriverForm = () => {
             return;
         }
 
-        axios.post(import.meta.env.VITE_BASE_URL + "/driver/rate", null, {
+        axios.post(import.meta.env.VITE_BASE_URL + "/ride/rate", null, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 rideID: localStorage.getItem("tempID"),
                 driverID: localStorage.getItem("DriverID"),
