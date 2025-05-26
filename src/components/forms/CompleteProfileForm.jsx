@@ -1,22 +1,23 @@
-import {useState} from "react";
-import axios from "axios";
+import {useLocation, useNavigate} from "react-router";
+import {useEffect, useState} from "react";
 import toast from "react-hot-toast";
-import {useNavigate} from "react-router";
+import axios from "axios";
 
-const RiderRegistration = () => {
+const CompleteProfileForm = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const { search } = useLocation();
+
+    const [userID, setUserID] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
+    const [role, setRole] = useState("");
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    useEffect(() => {
+        const params = new URLSearchParams(search);
+        setUserID(params.get("id"));
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+        localStorage.setItem("jwt", params.get("token"));
+    }, [search, navigate]);
 
     const handleAddressChange = (e) => {
         setAddress(e.target.value);
@@ -27,17 +28,11 @@ const RiderRegistration = () => {
         setPhoneNumber(value);
     };
 
-    const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (email === "" || password === "" || phoneNumber === "" || address === "") {
+        if (phoneNumber === "" || address === "" || role === "") {
             toast.error("Form cannot be left blank!");
-            return;
-        }
-
-        if (!emailRegex.test(email)) {
-            toast.error("Enter a valid email address!");
             return;
         }
 
@@ -46,22 +41,30 @@ const RiderRegistration = () => {
             return;
         }
 
-        axios.post(import.meta.env.VITE_BASE_URL + "/auth/register/rider", {
-                email,
-                password,
-                phoneNumber,
-                address,
-                x: Math.floor(Math.random() * 11),
-                y: Math.floor(Math.random() * 11)
+        axios.post(import.meta.env.VITE_BASE_URL + "/auth/profile", {
+            userID,
+            phoneNumber,
+            address,
+            x_coordinate: Math.floor(Math.random() * 11),
+            y_coordinate: Math.floor(Math.random() * 11),
+            role
         })
-            .then(response => {
+            .then(() => {
                 toast.success("Registered Successfully!");
 
-                navigate("/login")
+                navigate("/rides")
             })
             .catch(error => {
-                console.log(error)
-                toast.error(error.response.data);
+                if (error.response.data.error === "Invalid token") {
+                    toast.error("Session expired. Redirecting to login...");
+
+                    setTimeout(() => {
+                        navigate("/login");
+                    }, 3000)
+                }
+                else {
+                    toast.error(error.response.data.error);
+                }
             })
     };
 
@@ -70,7 +73,7 @@ const RiderRegistration = () => {
         <div className={"h-screen flex flex-col justify-center items-center bg-p"}>
             <div className="w-2/5 h-auto flex flex-col bg-blue-400/70 px-6 py-4 mx-16 rounded-2xl justify-center items-center border-2 border-black">
                 <h1 className="text-2xl font-semibold mb-4">
-                    Register as a Rider
+                    Complete your registration
                 </h1>
                 <>
                     <div className="flex items-center justify-center w-full">
@@ -78,22 +81,6 @@ const RiderRegistration = () => {
                             onSubmit={handleSubmit}
                             className="grid grid-cols-4 gap-4 w-full justify-center items-center"
                         >
-                            <label className="col-span-1 text-md font-medium text-right">Email ID:</label>
-                            <input
-                                type="text"
-                                value={email}
-                                onChange={handleEmailChange}
-                                className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
-                            />
-
-                            <label className="col-span-1 text-md font-medium text-right">Password:</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={handlePasswordChange}
-                                className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
-                            />
-
                             <label className="col-span-1 text-md font-medium text-right">Phone Number:</label>
                             <input
                                 type="text"
@@ -109,6 +96,18 @@ const RiderRegistration = () => {
                                 onChange={handleAddressChange}
                                 className="col-span-3 px-2 py-1 rounded-lg border-black/80 border-2"
                             />
+
+                            <label className="col-span-1 text-md font-medium text-right">Role:</label>
+                            <select
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                className="col-span-2 px-2 py-1 font-medium rounded-lg border-black/80 border-2"
+                                required
+                            >
+                                <option value="">Select Role</option>
+                                <option value="RIDER">Rider</option>
+                                <option value="DRIVER">Driver</option>
+                            </select>
 
                             <div className="col-span-4 flex justify-center mt-2">
                                 <button
@@ -126,4 +125,4 @@ const RiderRegistration = () => {
     );
 };
 
-export default RiderRegistration;
+export default CompleteProfileForm;

@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const PaymentForm = () => {
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("");
     const [billAmount, setBillAmount] = useState(null);
@@ -26,10 +28,20 @@ const PaymentForm = () => {
                 }
             }).then(response => {
                 setBillAmount(response.data);
+            }).catch(error => {
+                if (error.response.data.error === "Invalid token") {
+                    toast.error("Session expired. Redirecting to login...");
+
+                    setTimeout(() => {
+                        navigate("/login");
+                    }, 3000)
+                }
+                else {
+                    toast.error(error.response.data.error);
+                }
             });
         }
-
-    }, []);
+    }, [navigate]);
 
     const handleMethodChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -59,7 +71,7 @@ const PaymentForm = () => {
                 toast.success("Bill Paid!");
             }
             else {
-                toast.success("Wallet has insufficient funds! Please try again!");
+                toast.error("Wallet has insufficient funds! Please try again!");
 
                 setTimeout(() => {
                     setResponse(null);

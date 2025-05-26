@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const StopRideForm = () => {
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const [rideStatus, setRideStatus] = useState(null);
 
@@ -37,7 +39,16 @@ const StopRideForm = () => {
             toast.success("Ride Stopped Successfully!");
             localStorage.setItem("billPending", "true");
         }).catch(error => {
-            toast.error(error.response.data.error);
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
     };
 

@@ -3,9 +3,10 @@ import {BrowserRouter, Route, Routes} from "react-router";
 import RideServices from "./components/RideServices";
 import AdminServices from "./components/AdminServices.jsx";
 import {useEffect} from "react";
-import DriverRegistration from "./components/registration/DriverRegistration.jsx";
 import LoginForm from "./components/forms/LoginForm.jsx";
-import RiderRegistration from "./components/registration/RiderRegistration.jsx";
+import Registration from "./components/registration/Registration.jsx";
+import OAuth2RedirectHandler from "./components/OAuth2RedirectHandler.jsx";
+import CompleteProfileForm from "./components/forms/CompleteProfileForm.jsx";
 
 function App() {
     useEffect(() => {
@@ -27,8 +28,9 @@ function App() {
                 <Routes>
                     <Route index element={<Homepage />} />
                     <Route path={"login"} element={<LoginForm />} />
-                    <Route path={"register/driver"} element={<DriverRegistration />} />
-                    <Route path={"register/rider"} element={<RiderRegistration />} />
+                    <Route path={"register"} element={<Registration />} />
+                    <Route path="profile" element={<CompleteProfileForm />} />
+                    <Route path="oauth2/redirect" element={<OAuth2RedirectHandler />} />
                     <Route path={"rides"} element={<RideServices />} />
                     <Route path={"admin"} element={<AdminServices />} />
                 </Routes>

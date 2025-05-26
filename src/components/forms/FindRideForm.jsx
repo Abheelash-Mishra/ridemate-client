@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const FindRideForm = () => {
+    const navigate = useNavigate();
     const [destination, setDestination] = useState("");
     const [matchedDrivers, setMatchedDrivers] = useState(null);
     const [rideStatus, setRideStatus] = useState(null);
@@ -47,7 +49,6 @@ const FindRideForm = () => {
         toast.promise(request, {
             loading: "Searching for potential drivers...",
             success: "Search Complete!",
-            error: (err) => err.response.data.error
         });
 
         request.then(response => {
@@ -58,7 +59,18 @@ const FindRideForm = () => {
             if (drivers.length > 0) {
                 localStorage.setItem("matchedDrivers", JSON.stringify(drivers));
             }
-        }).catch(error => console.error(error.response));
+        }).catch(error => {
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Invalid session! Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
+        });
     };
 
     const handleStartRide = (e, index) => {
@@ -81,7 +93,16 @@ const FindRideForm = () => {
             setRideStatus(response.data);
             toast.success("Ride Started Successfully!");
         }).catch(error => {
-            toast.error(error.response.data.error);
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
     };
 

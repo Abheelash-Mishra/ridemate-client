@@ -1,8 +1,10 @@
 import {useEffect, useState} from 'react';
 import toast from "react-hot-toast";
 import axios from "axios";
+import {useNavigate} from "react-router";
 
 const RechargeForm = () => {
+    const navigate = useNavigate();
     const [amount, setAmount] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
     const [balance, setBalance] = useState(null);
@@ -20,9 +22,18 @@ const RechargeForm = () => {
         }).then(response => {
             setBalance(response.data);
         }).catch(error => {
-            toast.error(error.response.data.error);
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
-    }, []);
+    }, [navigate]);
 
     const handleMethodChange = (event) => {
         setPaymentMethod(event.target.value);

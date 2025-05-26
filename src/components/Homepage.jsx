@@ -1,27 +1,16 @@
-import RiderRegistration from "./registration/RiderRegistration.jsx";
 import {Link} from "react-router";
 
 const Homepage = () => {
     const handleLogout = () => {
-        localStorage.removeItem("jwt");
+        localStorage.clear();
 
-        // then refresh
         window.location.reload();
     };
 
     return (
         <>
             <div className="w-full h-80 flex flex-col items-center justify-center bg-gradient-to-b from-primary to-white">
-                <div className={"w-full flex justify-between items-center"}>
-                    <Link
-                        to={"/register/driver"}
-                        className={"px-8"}
-                    >
-                        <p className={"px-3 py-1 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900"}>
-                            Register as a driver
-                        </p>
-                    </Link>
-
+                <div className={"w-full flex justify-end items-center"}>
                     {/*<Link*/}
                     {/*    to={"/admin"}*/}
                     {/*    className={"px-8"}*/}
@@ -39,7 +28,7 @@ const Homepage = () => {
                                 </p>
                             </Link>
 
-                            <Link to="/register/rider" className="px-2">
+                            <Link to="/register" className="px-2">
                                 <p className="px-3 py-1 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900">
                                     Register
                                 </p>
@@ -48,8 +37,8 @@ const Homepage = () => {
                     ) : (
                         <button
                             onClick={handleLogout}
-                            on
-                            className="px-3 py-1 mx-4 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900">
+                            className="px-3 py-1 mx-4 transition-colors border-black border-y-2 font-semibold border-2 rounded-xl bg-gray-200 text-gray-700 hover:bg-blue-300 hover:text-gray-900"
+                        >
                             Logout
                         </button>
                     )}

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const WalletTransactions = () => {
+    const navigate = useNavigate();
     const [transactions, setTransactions] = useState([]);
     const [currentTab, setCurrentTab] = useState("Credit");
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,9 +21,18 @@ const WalletTransactions = () => {
         }).then(response => {
             setTransactions(response.data);
         }).catch(error => {
-            toast.error(error?.response?.data?.error || "Failed to fetch transactions.");
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
-    }, []);
+    }, [navigate]);
 
     const filteredTransactions = transactions.filter(txn =>
         currentTab === "Credit" ? txn.amount >= 0 : txn.amount < 0

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const ViewPastRides = () => {
+    const navigate = useNavigate();
     const [allRides, setAllRides] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 3;
@@ -17,11 +19,19 @@ const ViewPastRides = () => {
             }
         }).then(response => {
             setAllRides(response.data);
-            console.log(response.data)
         }).catch(error => {
-            toast.error(error.response.data.error);
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
-    }, []);
+    }, [navigate]);
 
     const totalPages = Math.ceil(allRides.length / pageSize);
 

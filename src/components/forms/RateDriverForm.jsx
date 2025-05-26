@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router";
 
 const RateDriverForm = () => {
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const [rating, setRating] = useState("");
     const [comment, setComment] = useState("");
@@ -58,7 +60,16 @@ const RateDriverForm = () => {
 
             toast.success("Driver Rated Successfully!");
         }).catch(error => {
-            toast.error(error.response.data.error);
+            if (error.response.data.error === "Invalid token") {
+                toast.error("Session expired. Redirecting to login...");
+
+                setTimeout(() => {
+                    navigate("/login");
+                }, 3000)
+            }
+            else {
+                toast.error(error.response.data.error);
+            }
         });
     };
 
