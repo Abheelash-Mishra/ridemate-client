@@ -16,6 +16,9 @@ const DriverInfoForm = () => {
         setResponse(null);
 
         axios.get(import.meta.env.VITE_BASE_URL + "/admin/drivers/list", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 N: number,
             }

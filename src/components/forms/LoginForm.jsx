@@ -44,6 +44,9 @@ const LoginForm = () => {
                 else if (response.data.role === "RIDER") {
                     navigate("/rides")
                 }
+                else if (response.data.role === "ADMIN") {
+                    navigate("/admin")
+                }
             })
             .catch(error => {
                 toast.error(error.response.data);

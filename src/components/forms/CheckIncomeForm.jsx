@@ -16,6 +16,9 @@ const CheckIncomeForm = () => {
         setResponse(null);
 
         axios.get(import.meta.env.VITE_BASE_URL + "/admin/drivers/earnings", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 driverID: driverID,
             }

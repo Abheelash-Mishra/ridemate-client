@@ -16,6 +16,9 @@ const RemoveDriver = () => {
         setResponse(null);
 
         axios.delete(import.meta.env.VITE_BASE_URL + "/admin/drivers/remove", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
             params: {
                 driverID: driverID,
             }
