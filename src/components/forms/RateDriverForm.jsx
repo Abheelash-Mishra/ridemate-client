@@ -6,7 +6,7 @@ import {useNavigate} from "react-router";
 const RateDriverForm = () => {
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
-    const [rating, setRating] = useState("");
+    const [rating, setRating] = useState("5.0");
     const [comment, setComment] = useState("");
     const [response, setResponse] = useState(null);
 
@@ -21,8 +21,7 @@ const RateDriverForm = () => {
     }, []);
 
     const handleRatingChange = (e) => {
-        const value = e.target.value.replace(/[^0-9.]/g, "");
-        setRating(value);
+        setRating(e.target.value);
     };
 
     const handleCommentChange = (e) => {
@@ -80,31 +79,38 @@ const RateDriverForm = () => {
                 <>
                     <form
                         onSubmit={handleSubmit}
-                        className="grid grid-cols-4 gap-4 w-2/3 justify-center items-center"
+                        className="flex flex-col gap-4 w-2/3 justify-center items-center"
                     >
-                        <label className="col-span-2 font-medium text-right">Enter Rating:</label>
-                        <input
-                            type="text"
-                            value={rating}
-                            onChange={handleRatingChange}
-                            className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                        />
+                        <div className={"flex items-center"}>
+                            <label className="mx-4">
+                                Rating: {parseFloat(rating).toFixed(1)}
+                            </label>
+                            <input
+                                type="range"
+                                min={0.0}
+                                max={5.0}
+                                step={0.1}
+                                value={rating}
+                                onChange={handleRatingChange}
+                            />
+                        </div>
+                        <div>
+                            <label className="mx-4">Comments:</label>
+                            <input
+                                type="text"
+                                value={comment}
+                                onChange={handleCommentChange}
+                                className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
+                            />
 
-                        <label className="col-span-2 font-medium text-right">Enter Comment:</label>
-                        <input
-                            type="text"
-                            value={comment}
-                            onChange={handleCommentChange}
-                            className="col-span-2 px-2 py-1 rounded-lg border-black/80 border-2"
-                        />
-
-                        <div className="col-span-4 flex justify-center mt-2">
-                            <button
-                                type="submit"
-                                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
-                            >
-                                Rate Driver
-                            </button>
+                            <div className="flex justify-center mt-8">
+                                <button
+                                    type="submit"
+                                    className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+                                >
+                                    Rate Driver
+                                </button>
+                            </div>
                         </div>
                     </form>
 
